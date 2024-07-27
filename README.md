@@ -58,7 +58,7 @@ Arithmetic operations can write to all registers except `v0`-`v7` and `pc`. Can 
 | `mul` dst: r/m, val: r/m/imm | `dst` = `dst` * `val` |
 | `div` dst: r/m, val: r/m/imm | `dst` = `dst` / `val` |
 | `inc` dst: r/m               | `dst` = `dst` + `1`   |
-| `dec` dst: r/m                | `dst` = `dst` - `1`   |
+| `dec` dst: r/m               | `dst` = `dst` - `1`   |
 
 #### Example
 ```
