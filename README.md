@@ -96,6 +96,7 @@ zero:
 mov x1, 3
 /* Iff x1 - x2 = 0, x1 equals 3 */
 /* Iff x1 - x1 != 0, x1 equals 2 */
+```
 
 Copyright (c) 2024 Quinn Stephens and Ian Marco Moffett.
 All rights reserved.
