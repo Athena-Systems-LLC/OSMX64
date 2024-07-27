@@ -63,7 +63,7 @@ Arithmetic operations can write to all registers except `v0`-`v7`, `x0` and `pc`
 #### Example
 ```
 /* Set x1 to 5 */
-cpy x1, 5
+mov x1, 5
 /* Increment x1 */
 inc x1
 /* x1 now equals 6 */
@@ -91,8 +91,8 @@ Control flow instructions are used to control which instructions the CPU execute
 /* Subtract x2 from x1 */
 sub x1, x2
 beq x1, 0, zero
-cpy x1, 2
+mov x1, 2
 zero:
-cpy x1, 3
+mov x1, 3
 /* Iff x1 - x2 = 0, x1 equals 3 */
 /* Iff x1 - x1 != 0, x1 equals 2 */
