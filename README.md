@@ -29,7 +29,7 @@ Only accessed by the CPU for certain instructions. Cannot be directly read/writt
 
 ### Bitwise Instructions
 
-Bitwise logic operations can write to all registers except `v0`-`v7` and `pc`. Can read from all registers except `v0`-`v7`.
+Bitwise logic operations can write to all registers except `v0`-`v7`, `x0` and `pc`. Can read from all registers except `v0`-`v7`.
 
 | Mnemonic                     | Effect                 |
 | ---------------------------- | ---------------------- |
@@ -49,7 +49,7 @@ and x1, 1
 
 ### Arithmetic Instructions
 
-Arithmetic operations can write to all registers except `v0`-`v7` and `pc`. Can read from all registers except `v0`-`v7`.
+Arithmetic operations can write to all registers except `v0`-`v7`, `x0` and `pc`. Can read from all registers except `v0`-`v7`.
 
 | Mnemonic                     | Effect                |
 | ---------------------------- | --------------------- |
