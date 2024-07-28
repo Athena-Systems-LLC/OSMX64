@@ -55,10 +55,10 @@ and x1, x1, #1
 | `stw` src: r, [dst: m, offset: r/imm] | 2-byte store to memory at `dst`    |
 | `std` src: r, [dst: m, offset: r/imm] | 4-byte store to memory at `dst`    |
 | `stq` src: r, [dst: m, offset: r/imm] | 8-byte store to memory at `dst`    |
-| `ltb` dst: r, [src: m, offset: r/imm] | 1-byte load from memory at `src`   |
-| `ltw` dst: r, [src: m, offset: r/imm] | 2-byte load from memory at `src`   |
-| `ltd` dst: r, [src: m, offset: r/imm] | 4-byte load from memory at `src`   |
-| `ltq` dst: r, [src: m, offset: r/imm] | 8-byte load from memory at `src`   |
+| `ldb` dst: r, [src: m, offset: r/imm] | 1-byte load from memory at `src`   |
+| `ldw` dst: r, [src: m, offset: r/imm] | 2-byte load from memory at `src`   |
+| `ldd` dst: r, [src: m, offset: r/imm] | 4-byte load from memory at `src`   |
+| `ldq` dst: r, [src: m, offset: r/imm] | 8-byte load from memory at `src`   |
 
 #### Example
 ```
