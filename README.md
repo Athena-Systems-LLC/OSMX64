@@ -41,9 +41,9 @@ Bitwise logic operations can write to all registers except `v0`-`v7`, `x0` and `
 #### Example
 ```
 /* Set x1 to 5 */
-mov x1, 5
+mov x1, #5
 /* Ands x1 (which equals 5) with 1 */
-and x1, 1
+and x1, #1
 /* x1 now equals 1 */
 ```
 
@@ -63,7 +63,7 @@ Arithmetic operations can write to all registers except `v0`-`v7`, `x0` and `pc`
 #### Example
 ```
 /* Set x1 to 5 */
-mov x1, 5
+mov x1, #5
 /* Increment x1 */
 inc x1
 /* x1 now equals 6 */
@@ -89,11 +89,11 @@ Control flow instructions are used to control which instructions the CPU execute
 #### Example
 ```
 /* Subtract x2 from x1 */
-sub x1, x2
-beq x1, 0, zero
-mov x1, 2
+sub x1, x1, x2
+beq x1, #0, zero
+mov x1, #2
 zero:
-mov x1, 3
+mov x1, #3
 /* Iff x1 - x2 = 0, x1 equals 3 */
 /* Iff x1 - x1 != 0, x1 equals 2 */
 ```
