@@ -51,14 +51,14 @@ and x1, x1, #1
 | Mnemonic                              | Effect
 | ------------------------------------- | ---------------------------------- |
 | `mov` dst: r, src: r/imm              | `dst` = `src`                      |
-| `stb` src: r, [dst: m, offset: r/imm] | 1-byte write to memory at `dst`    |
-| `stw` src: r, [dst: m, offset: r/imm] | 2-byte write to memory at `dst`    |
-| `std` src: r, [dst: m, offset: r/imm] | 4-byte write to memory at `dst`    |
-| `stq` src: r, [dst: m, offset: r/imm] | 8-byte write to memory at `dst`    |
-| `ltb` dst: r, [src: m, offset: r/imm] | 1-byte read from memory at `src`   |
-| `ltw` dst: r, [src: m, offset: r/imm] | 2-byte read from memory at `src`   |
-| `ltd` dst: r, [src: m, offset: r/imm] | 4-byte read from memory at `src`   |
-| `ltq` dst: r, [src: m, offset: r/imm] | 8-byte read from memory at `src`   |
+| `stb` src: r, [dst: m, offset: r/imm] | 1-byte store to memory at `dst`    |
+| `stw` src: r, [dst: m, offset: r/imm] | 2-byte store to memory at `dst`    |
+| `std` src: r, [dst: m, offset: r/imm] | 4-byte store to memory at `dst`    |
+| `stq` src: r, [dst: m, offset: r/imm] | 8-byte store to memory at `dst`    |
+| `ltb` dst: r, [src: m, offset: r/imm] | 1-byte load from memory at `src`   |
+| `ltw` dst: r, [src: m, offset: r/imm] | 2-byte load from memory at `src`   |
+| `ltd` dst: r, [src: m, offset: r/imm] | 4-byte load from memory at `src`   |
+| `ltq` dst: r, [src: m, offset: r/imm] | 8-byte load from memory at `src`   |
 
 #### Example
 ```
