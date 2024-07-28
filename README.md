@@ -42,7 +42,7 @@ Bitwise logic operations can write to all registers except `v0`-`v7`, `x0` and `
 /* Set x1 to 5 */
 mov x1, #5
 /* Ands x1 (which equals 5) with 1 */
-and x1, #1
+and x1, x1, #1
 /* x1 now equals 1 */
 ```
 
