@@ -31,12 +31,11 @@ Only accessed by the CPU for certain instructions. Cannot be directly read/writt
 
 Bitwise logic operations can write to all registers except `v0`-`v7`, `x0` and `pc`. Can read from all registers except `v0`-`v7`.
 
-| Mnemonic                     | Effect                 |
-| ---------------------------- | ---------------------- |
-| `mov` dst: r/m, src: r/m/imm | `dst` = `src`          |
-| `and` dst: r/m, val: r/m/imm | `dst` = `dst` & `val`  |
-| `or` dst: r/m, val: r/m/imm  | `dst` = `dst` \| `val` |
-| `xor` dst: r/m, val: r/m/imm | `dst` = `dst` ^ `val`  |
+| Mnemonic                         | Effect                 |
+| -------------------------------- | ---------------------- |
+| `and` dst: r, reg: r, val: r/imm | `dst` = `dst` & `val`  |
+| `or` dst: r, reg: r, val: r/imm  | `dst` = `dst` \| `val` |
+| `xor` dst: r, reg: r, val: r/imm | `dst` = `dst` ^ `val`  |
 
 #### Example
 ```
@@ -45,6 +44,36 @@ mov x1, #5
 /* Ands x1 (which equals 5) with 1 */
 and x1, #1
 /* x1 now equals 1 */
+```
+
+### Data Movement Instructions
+
+| Mnemonic                              | Effect
+| ------------------------------------- | ---------------------------------- |
+| `mov` dst: r, src: r/imm              | `dst` = `src`                      |
+| `stb` src: r, [dst: m, offset: r/imm] | 1-byte write to memory at `dst`    |
+| `stw` src: r, [dst: m, offset: r/imm] | 2-byte write to memory at `dst`    |
+| `std` src: r, [dst: m, offset: r/imm] | 4-byte write to memory at `dst`    |
+| `stq` src: r, [dst: m, offset: r/imm] | 8-byte write to memory at `dst`    |
+| `ltb` dst: r, [src: m, offset: r/imm] | 1-byte read from memory at `src`   |
+| `ltw` dst: r, [src: m, offset: r/imm] | 2-byte read from memory at `src`   |
+| `ltd` dst: r, [src: m, offset: r/imm] | 4-byte read from memory at `src`   |
+| `ltq` dst: r, [src: m, offset: r/imm] | 8-byte read from memory at `src`   |
+
+#### Example
+```
+/* Set x1 to 7 */
+mov x1, #7
+
+/* Write to memory pointed by sp */
+stq x1, [sp]
+
+/* Write to memory pointed by sp + 8 */
+stq x1, [sp, #8]
+
+/* Write to memory pointed by sp + x2 */
+mov x2, #16
+stq x1, [sp, x2]
 ```
 
 ### Arithmetic Instructions
