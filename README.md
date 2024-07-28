@@ -51,14 +51,14 @@ and x1, #1
 
 Arithmetic operations can write to all registers except `v0`-`v7`, `x0` and `pc`. Can read from all registers except `v0`-`v7`.
 
-| Mnemonic                     | Effect                |
-| ---------------------------- | --------------------- |
-| `add` dst: r/m, val: r/m/imm | `dst` = `dst` + `val` |
-| `sub` dst: r/m, val: r/m/imm | `dst` = `dst` - `val` |
-| `mul` dst: r/m, val: r/m/imm | `dst` = `dst` * `val` |
-| `div` dst: r/m, val: r/m/imm | `dst` = `dst` / `val` |
-| `inc` dst: r/m               | `dst` = `dst` + `1`   |
-| `dec` dst: r/m               | `dst` = `dst` - `1`   |
+| Mnemonic                             | Effect                |
+| ------------------------------------ | --------------------- |
+| `add` dst: r, reg: r, val: r/imm     | `dst` = `dst` + `val` |
+| `sub` dst: r, reg: r, val: r/imm     | `dst` = `dst` - `val` |
+| `mul` dst: r, reg: r, val: r/imm     | `dst` = `dst` * `val` |
+| `div` dst: r, reg: r, val: r/imm     | `dst` = `dst` / `val` |
+| `inc` dst: r                         | `dst` = `dst` + `1`   |
+| `dec` dst: r                         | `dst` = `dst` - `1`   |
 
 #### Example
 ```
