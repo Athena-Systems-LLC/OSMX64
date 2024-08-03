@@ -21,6 +21,11 @@ int main(int argc, char** argv, char** env) {
     for (int i = 0; i < MAX_SIM_ITER; ++i) {
         if (i == 5) {
             pimc->irq_in = 0b00000000;
+            pimc->irqack = 1;
+        }
+
+        if (i == 10) {
+            pimc->irqack = 0;
         }
 
         pimc->clk ^= 1;
