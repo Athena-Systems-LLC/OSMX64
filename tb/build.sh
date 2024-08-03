@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dirlist=$(find tb/ -type f -name "Makefile")
+dirlist=$(find . -type f -name "Makefile")
 
 for dir in $dirlist
 do
