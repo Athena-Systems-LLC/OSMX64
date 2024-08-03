@@ -29,3 +29,12 @@ by pulsing IRQACK high for at least 2 ms.
 
 As soon as a rising edge of the PIMC CLK signal occurs with IRQACK pulled high, NOTIFY# is pulled high
 and LINENO[7:0] becomes zero.
+
+## Signalling
+
+When a peripheral needs to signal an event, it pulses its IRQ line high for 1 ms which results in
+NOTIFY# being pulled low and LINENO[7:0] set to the source line number. After an IRQ has been handled,
+it can be acknowledged by pulsing IRQACK high for 2 ms. After an IRQ has been acknowledged, NOTIFY#
+is pulled high and LINENO[7:0] is cleared to zero.
+
+![signals](images/irq.png)
