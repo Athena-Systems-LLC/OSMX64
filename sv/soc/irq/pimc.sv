@@ -43,8 +43,10 @@ module pimc #(
 
         /* MMIO interface */
         input logic [47:0] mmio_addr,
+        input logic [31:0] mmio_wdata,
         output logic [31:0] mmio_rdata,
         input wire mmio_re,
+        input wire mmio_we,
 
         output logic notify,
         output logic [7:0] lineno,
@@ -84,6 +86,28 @@ module pimc #(
                 IRQTAB_MMIOBASE + 52: mmio_rdata <= irqtab[13];
                 IRQTAB_MMIOBASE + 56: mmio_rdata <= irqtab[14];
                 IRQTAB_MMIOBASE + 60: mmio_rdata <= irqtab[15];
+            endcase
+        end
+
+        /* Handle MMIO wires */
+        if (mmio_we) begin
+            case (mmio_addr)
+                IRQTAB_MMIOBASE: irqtab[0] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 4: irqtab[1] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 8: irqtab[2] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 12: irqtab[3] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 16: irqtab[4] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 20: irqtab[5] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 24: irqtab[6] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 28: irqtab[7] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 32: irqtab[8] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 36: irqtab[9] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 40: irqtab[10] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 44: irqtab[11] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 48: irqtab[12] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 52: irqtab[13] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 56: irqtab[14] <= mmio_wdata;
+                IRQTAB_MMIOBASE + 60: irqtab[15] <= mmio_wdata;
             endcase
         end
 
