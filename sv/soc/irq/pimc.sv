@@ -34,7 +34,8 @@
 
 module pimc #(
         parameter IRQ_PIN_COUNT = 16,
-        parameter IRQTAB_ENTSIZE = 9,
+        parameter IRQTAB_ENTSIZE = 32,
+        parameter IRQTAB_MMIOBASE = 48'h1000,
 
         /* irqtab indices */
         parameter IRQTAB_MASK = 1
@@ -42,23 +43,53 @@ module pimc #(
         input wire clk,         /* 50 MHz */
         input logic [IRQ_PIN_COUNT-1:0] irq_in,
         input logic irqack,
+
+        /* MMIO interface */
+        input logic [47:0] mmio_addr,
+        output logic [31:0] mmio_rdata,
+        input wire mmio_re,
+
         output logic notify,
         output logic [7:0] lineno,
         output logic [7:0] processor_id
     );
 
     integer i;
-    bit irqmask;
     bit accept;
-    reg [IRQTAB_ENTSIZE - 1:0] irqtab[IRQ_PIN_COUNT - 1];
+    bit irqmask;
+    reg [IRQTAB_ENTSIZE - 1:0] irqtab[IRQ_PIN_COUNT];
 
     initial begin
         for (i = 0; i < IRQ_PIN_COUNT; i = i + IRQTAB_ENTSIZE) begin
-          irqtab[i] = 9'b0;
+          irqtab[i] = 32'b0;
         end
+
+        mmio_rdata = 32'b0;
     end
 
     always @(posedge clk) begin
+        /* Handle MMIO reads */
+        if (mmio_re) begin
+            case (mmio_addr)
+                IRQTAB_MMIOBASE: mmio_rdata <= irqtab[0];
+                IRQTAB_MMIOBASE + 4: mmio_rdata <= irqtab[1];
+                IRQTAB_MMIOBASE + 8: mmio_rdata <= irqtab[2];
+                IRQTAB_MMIOBASE + 12: mmio_rdata <= irqtab[3];
+                IRQTAB_MMIOBASE + 16: mmio_rdata <= irqtab[4];
+                IRQTAB_MMIOBASE + 20: mmio_rdata <= irqtab[5];
+                IRQTAB_MMIOBASE + 24: mmio_rdata <= irqtab[6];
+                IRQTAB_MMIOBASE + 28: mmio_rdata <= irqtab[7];
+                IRQTAB_MMIOBASE + 32: mmio_rdata <= irqtab[8];
+                IRQTAB_MMIOBASE + 36: mmio_rdata <= irqtab[9];
+                IRQTAB_MMIOBASE + 40: mmio_rdata <= irqtab[10];
+                IRQTAB_MMIOBASE + 44: mmio_rdata <= irqtab[11];
+                IRQTAB_MMIOBASE + 48: mmio_rdata <= irqtab[12];
+                IRQTAB_MMIOBASE + 52: mmio_rdata <= irqtab[13];
+                IRQTAB_MMIOBASE + 56: mmio_rdata <= irqtab[14];
+                IRQTAB_MMIOBASE + 60: mmio_rdata <= irqtab[15];
+            endcase
+        end
+
         if (irqack == 1'b1) begin
             lineno <= 8'b0;
             notify <= 1'b1;
