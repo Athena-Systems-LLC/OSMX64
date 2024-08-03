@@ -66,12 +66,12 @@ module pimc #(
         end else begin
             for (i = 0; i < IRQ_PIN_COUNT; i = i + 1) begin
                 /* IRQ should be dropped if masked */
-                irqmask <= irqtab[(i * IRQTAB_ENTSIZE) + IRQTAB_MASK];
+                irqmask <= irqtab[(i * IRQTAB_ENTSIZE) + IRQTAB_MASK][0];
                 accept <= (irqmask == 1'b0 && notify == 1'b1);
                 if (irq_in[i] == 1'b1 && accept == 1'b1) begin
-                    lineno <= i;
+                    lineno <= i[7:0];
                     notify <= 1'b0;
-                    processor_id <= irqtab[i * IRQTAB_ENTSIZE];
+                    processor_id <= irqtab[i * IRQTAB_ENTSIZE][7:0];
                 end
             end
         end
