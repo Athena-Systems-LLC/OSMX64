@@ -35,9 +35,11 @@
 #include "Vpimc___024root.h"
 
 #define MAX_SIM_ITER 100
+#define IRQ_WAIT_CLOCKS 5
 
 int main(int argc, char** argv, char** env) {
     Vpimc *pimc = new Vpimc;
+    vluint64_t posedge_cnt = 0;
 
     Verilated::traceEverOn(true);
     VerilatedVcdC *m_trace = new VerilatedVcdC;
@@ -45,20 +47,46 @@ int main(int argc, char** argv, char** env) {
     m_trace->open("waveform.vcd");
 
     pimc->notify = 1;
-    pimc->irq_in = 0b00000010;  /* Pulse IRQ line high */
 
     for (int i = 0; i < MAX_SIM_ITER; ++i) {
-        if (i == 5) {
-            pimc->irq_in = 0b00000000;
-            pimc->irqack = 1;
-        }
-
-        if (i == 10) {
-            pimc->irqack = 0;
-        }
-
         pimc->clk ^= 1;
         pimc->eval();
+
+        if (pimc->clk == 1) {
+            ++posedge_cnt;
+
+            /* Pulse IRQ line 3 high some cycles */
+            if (posedge_cnt == 5) {
+                pimc->irq_in |= (1 << 3);
+            } else if (posedge_cnt == 9) {
+                pimc->irq_in &= ~(1 << 3);
+            }
+
+            /* ACK IRQ */
+            if (posedge_cnt == 13) {
+                pimc->irqack = 1;
+            } else if (posedge_cnt == 17) {
+                pimc->irqack = 0;
+            }
+
+            /* Mask IRQ line 0 */
+            if (posedge_cnt == 15) {
+                pimc->mmio_addr = 0x1000;
+                pimc->mmio_wdata |= (1 << 8);
+                pimc->mmio_we = 1;
+                pimc->mmio_re = 0;
+            } else if (posedge_cnt == 18) {
+                pimc->mmio_we = 0;
+            }
+
+            /* Pulse IRQ line 0 high some cycles */
+            if (posedge_cnt == 19) {
+                pimc->irq_in |= (1 << 0);
+            } else if (posedge_cnt == 23) {
+                pimc->irq_in &= ~(1 << 0);
+            }
+        }
+
         m_trace->dump(i);
     }
 
