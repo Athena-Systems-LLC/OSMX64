@@ -34,26 +34,44 @@
 
 module pimc #(
         parameter IRQ_PIN_COUNT = 16,
-        parameter IRQTAB_ENTSIZE = 8
+        parameter IRQTAB_ENTSIZE = 9,
+
+        /* irqtab indices */
+        parameter IRQTAB_MASK = 1
     ) (
         input wire clk,         /* 50 MHz */
         input logic [IRQ_PIN_COUNT-1:0] irq_in,
         input logic irqack,
         output logic notify,
-        output logic [7:0] lineno
+        output logic [7:0] lineno,
+        output logic [7:0] processor_id
     );
 
     integer i;
+    bit irqmask;
+    bit accept;
+    reg [IRQTAB_ENTSIZE - 1:0] irqtab[IRQ_PIN_COUNT - 1];
+
+    initial begin
+        for (i = 0; i < IRQ_PIN_COUNT; i = i + IRQTAB_ENTSIZE) begin
+          irqtab[i] = 9'b0;
+        end
+    end
 
     always @(posedge clk) begin
         if (irqack == 1'b1) begin
             lineno <= 8'b0;
             notify <= 1'b1;
+            processor_id <= 8'b0;
         end else begin
             for (i = 0; i < IRQ_PIN_COUNT; i = i + 1) begin
-               if (irq_in[i] == 1'b1 && notify == 1'b1) begin
+                /* IRQ should be dropped if masked */
+                irqmask <= irqtab[(i * IRQTAB_ENTSIZE) + IRQTAB_MASK];
+                accept <= (irqmask == 1'b0 && notify == 1'b1);
+                if (irq_in[i] == 1'b1 && accept == 1'b1) begin
                     lineno <= i;
                     notify <= 1'b0;
+                    processor_id <= irqtab[i * IRQTAB_ENTSIZE];
                 end
             end
         end
