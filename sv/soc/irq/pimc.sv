@@ -89,7 +89,7 @@ module pimc #(
             endcase
         end
 
-        /* Handle MMIO wires */
+        /* Handle MMIO writes */
         if (mmio_we) begin
             case (mmio_addr)
                 IRQTAB_MMIOBASE: irqtab[0] <= mmio_wdata;
