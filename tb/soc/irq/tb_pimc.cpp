@@ -35,7 +35,6 @@
 #include "Vpimc___024root.h"
 
 #define MAX_SIM_ITER 100
-#define IRQ_WAIT_CLOCKS 5
 
 int main(int argc, char** argv, char** env) {
     Vpimc *pimc = new Vpimc;
