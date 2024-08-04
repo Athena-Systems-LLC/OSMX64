@@ -76,6 +76,7 @@ int main(int argc, char** argv, char** env) {
                 pimc->mmio_re = 0;
             } else if (posedge_cnt == 18) {
                 pimc->mmio_we = 0;
+                pimc->mmio_wdata = 0;
             }
 
             /* Pulse IRQ line 0 high some cycles */
