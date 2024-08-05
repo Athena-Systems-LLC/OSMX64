@@ -70,7 +70,7 @@ int main(int argc, char** argv, char** env) {
 
             /* Mask IRQ line 0 */
             if (posedge_cnt == 15) {
-                pimc->mmio_addr = 0x1000;
+                pimc->mmio_addr = 0x1000000;
                 pimc->mmio_wdata |= (1 << 8);
                 pimc->mmio_we = 1;
                 pimc->mmio_re = 0;

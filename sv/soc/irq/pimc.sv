@@ -35,7 +35,7 @@
 module pimc #(
         parameter IRQ_PIN_COUNT = 16,
         parameter IRQTAB_ENTSIZE = 32,
-        parameter IRQTAB_MMIOBASE = 48'h1000
+        parameter IRQTAB_MMIOBASE = 48'h1000000
     ) (
         input wire clk,         /* 50 MHz */
         input logic [IRQ_PIN_COUNT-1:0] irq_in,

@@ -47,7 +47,7 @@ is pulled high and LINENO[7:0] is cleared to zero.
 ## MMIO Interface
 
 Some registers within the PIMC chip are memory mapped and can be accessed through the MMIO interface. For example,
-the IRQ table is accessed through physical address 0x1000 + OFFSET.
+the IRQ table is accessed through physical address 0x1000000 + OFFSET.
 
 ### MMIO Interface Semantics
 
