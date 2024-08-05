@@ -21,4 +21,4 @@ each range is assigned to.
 | 0x1000034        | PIMC IRQ Table (pin 13)          | 4            |
 | 0x1000038        | PIMC IRQ Table (pin 14)          | 4            |
 | 0x100003C        | PIMC IRQ Table (pin 15)          | 4            |
-| 0x1000040        | Reserved                         | 4096         |
+| 0x1000040        | Reserved                         | 256          |
