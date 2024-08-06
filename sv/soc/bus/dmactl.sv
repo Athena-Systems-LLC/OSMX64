@@ -105,25 +105,25 @@ module dmactl #(
                 C0_MMIO_BASE: mmio_rdata <= c0_src;
                 C0_MMIO_BASE + 8: mmio_rdata <= c0_dest;
                 C0_MMIO_BASE + 16: mmio_rdata <= { 48'b0, c0_size[15:0] };
-                C0_MMIO_BASE + 24: mmio_rdata <= { 56'b0, c0_ctl[7:0] };
+                C0_MMIO_BASE + 18: mmio_rdata <= { 56'b0, c0_ctl[7:0] };
 
                 /* Channel 1 */
                 C1_MMIO_BASE: mmio_rdata <= c1_src;
                 C1_MMIO_BASE + 8: mmio_rdata <= c1_dest;
                 C1_MMIO_BASE + 16: mmio_rdata <= { 48'b0, c1_size[15:0] };
-                C1_MMIO_BASE + 24: mmio_rdata <= { 56'b0, c1_ctl[7:0] };
+                C1_MMIO_BASE + 18: mmio_rdata <= { 56'b0, c1_ctl[7:0] };
 
                 /* Channel 2 */
                 C2_MMIO_BASE: mmio_rdata <= c2_src;
                 C2_MMIO_BASE + 8: mmio_rdata <= c2_dest;
                 C2_MMIO_BASE + 16: mmio_rdata <= { 48'b0, c2_size[15:0] };
-                C2_MMIO_BASE + 24: mmio_rdata <= { 56'b0, c2_ctl[7:0] };
+                C2_MMIO_BASE + 18: mmio_rdata <= { 56'b0, c2_ctl[7:0] };
 
                 /* Channel 3 */
                 C3_MMIO_BASE: mmio_rdata <= c3_src;
                 C3_MMIO_BASE + 8: mmio_rdata <= c3_dest;
                 C3_MMIO_BASE + 16: mmio_rdata <= { 48'b0, c3_size[15:0] };
-                C3_MMIO_BASE + 24: mmio_rdata <= { 56'b0, c3_ctl[7:0] };
+                C3_MMIO_BASE + 18: mmio_rdata <= { 56'b0, c3_ctl[7:0] };
             endcase
         end
 
@@ -134,24 +134,25 @@ module dmactl #(
                 C0_MMIO_BASE: c0_src <= mmio_wdata;
                 C0_MMIO_BASE + 8: c0_dest <= mmio_wdata;
                 C0_MMIO_BASE + 16: c0_size <= mmio_wdata[15:0];
-                C0_MMIO_BASE + 24: c0_ctl <= mmio_wdata[7:0];
+                C0_MMIO_BASE + 18: c0_ctl <= mmio_wdata[7:0];
 
                 /* Channel 1 */
                 C1_MMIO_BASE: c1_src <= mmio_wdata;
                 C1_MMIO_BASE + 8: c1_dest <= mmio_wdata;
                 C1_MMIO_BASE + 16: c1_size <= mmio_wdata[15:0];
-                C1_MMIO_BASE + 24: c1_ctl <= mmio_wdata[7:0];
+                C1_MMIO_BASE + 18: c1_ctl <= mmio_wdata[7:0];
 
                 /* Channel 2 */
                 C2_MMIO_BASE: c2_src <= mmio_wdata;
                 C2_MMIO_BASE + 8: c2_dest <= mmio_wdata;
                 C2_MMIO_BASE + 16: c2_size <= mmio_wdata[15:0];
-                C2_MMIO_BASE + 24: c2_ctl <= mmio_wdata[7:0];
+                C2_MMIO_BASE + 18: c2_ctl <= mmio_wdata[7:0];
 
                 /* Channel 3 */
+                C3_MMIO_BASE: c3_dest <= mmio_wdata;
                 C3_MMIO_BASE + 8: c3_dest <= mmio_wdata;
                 C3_MMIO_BASE + 16: c3_size <= mmio_wdata[15:0];
-                C3_MMIO_BASE + 24: c3_ctl <= mmio_wdata[7:0];
+                C3_MMIO_BASE + 18: c3_ctl <= mmio_wdata[7:0];
             endcase
         end
     end
