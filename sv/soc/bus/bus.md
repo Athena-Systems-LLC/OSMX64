@@ -22,3 +22,19 @@ each range is assigned to.
 | 0x1000038        | PIMC IRQ Table (pin 14)          | 4            |
 | 0x100003C        | PIMC IRQ Table (pin 15)          | 4            |
 | 0x1000040        | Reserved                         | 256          |
+| 0x1000140        | Generic DMA Source (channel 0)   | 8            |
+| 0x1000148        | Generic DMA Dest (channel 0)     | 8            |
+| 0x1000150        | Generic DMA Size (channel 0)     | 2            |
+| 0x1000152        | Generic DMA Control (channel 0)  | 1            |
+| 0x1000153        | Generic DMA Source (channel 1)   | 8            |
+| 0x100015B        | Generic DMA Dest (channel 1)     | 8            |
+| 0x1000163        | Generic DMA Size (channel 1)     | 2            |
+| 0x1000165        | Generic DMA Control (channel 1)  | 1            |
+| 0x1000166        | Generic DMA Source (channel 2)   | 8            |
+| 0x100015B        | Generic DMA Dest (channel 2)     | 8            |
+| 0x1000163        | Generic DMA Size (channel 2)     | 2            |
+| 0x1000165        | Generic DMA Control (channel 2)  | 1            |
+| 0x1000166        | Generic DMA Source (channel 3)   | 8            |
+| 0x100016E        | Generic DMA Dest (channel 3)     | 8            |
+| 0x1000176        | Generic DMA Size (channel 3)     | 2            |
+| 0x1000178        | Generic DMA Control (channel 3)  | 1            |
