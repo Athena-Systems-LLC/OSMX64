@@ -37,7 +37,11 @@ module dmactl #(
         parameter C0_MMIO_BASE = 48'h1000140,
         parameter C1_MMIO_BASE = 48'h1000153,
         parameter C2_MMIO_BASE = 48'h1000153,
-        parameter C3_MMIO_BASE = 48'h1000166
+        parameter C3_MMIO_BASE = 48'h1000166,
+
+        /* Channel control bits */
+        parameter CCTL_START = 0,
+        parameter CCTL_WRITE = 1
     ) (
         input wire clk,
 
@@ -46,56 +50,102 @@ module dmactl #(
         input logic [63:0] mmio_wdata,
         output logic [63:0] mmio_rdata,
         input wire mmio_re,
-        input wire mmio_we
+        input wire mmio_we,
+
+        /* Memory bus interface */
+        output wire mbus_re,
+        output wire mbus_we,
+        output logic [47:0] mbus_addr,
+        output logic [63:0] mbus_wdata,
+        input logic [63:0] mbus_rdata
     );
 
     /* Channel 0 register set */
     reg [63:0] c0_src;
     reg [63:0] c0_dest;
+    reg [63:0] c0_rdata;
     reg [15:0] c0_size;
     reg [7:0] c0_ctl;
 
     /* Channel 1 register set */
     reg [63:0] c1_src;
     reg [63:0] c1_dest;
+    reg [63:0] c1_rdata;
     reg [15:0] c1_size;
     reg [7:0] c1_ctl;
 
     /* Channel 2 register set */
     reg [63:0] c2_src;
     reg [63:0] c2_dest;
+    reg [63:0] c2_rdata;
     reg [15:0] c2_size;
     reg [7:0] c2_ctl;
 
     /* Channel 3 register set */
     reg [63:0] c3_src;
     reg [63:0] c3_dest;
+    reg [63:0] c3_rdata;
     reg [15:0] c3_size;
     reg [7:0] c3_ctl;
 
     initial begin
         c0_src = 64'b0;
         c0_dest = 64'b0;
+        c0_rdata = 64'b0;
         c0_size = 16'b0;
         c0_ctl  = 8'b0;
 
         c1_src = 64'b0;
         c1_dest = 64'b0;
+        c1_rdata = 64'b0;
         c1_size = 16'b0;
         c1_ctl  = 8'b0;
 
         c2_src = 64'b0;
         c2_dest = 64'b0;
+        c2_rdata = 64'b0;
         c2_size = 16'b0;
         c2_ctl  = 8'b0;
 
         c3_src = 64'b0;
         c3_dest = 64'b0;
+        c3_rdata = 64'b0;
         c3_size = 16'b0;
         c3_ctl  = 8'b0;
 
         mmio_rdata = 64'b0;
+        mbus_addr = 48'b0;
+        mbus_re = 1'b0;
+        mbus_we = 1'b0;
+        mbus_wdata = 64'b0;
     end
+
+    task channel_rw;
+        input [63:0] c_inbuf;
+        input [47:0] c_src;
+        input [47:0] c_dest;
+        input [15:0] c_size;
+        input [7:0] c_ctl;
+
+        if (c_ctl[CCTL_WRITE] == 1'b1 && c_size < 8) begin
+            /* Prepare to read data into buffer register */
+            mbus_addr <= c_src[47:0];
+            mbus_we <= 1'b0;
+            mbus_re <= 1'b1;
+
+            @(posedge clk);
+            c_inbuf = mbus_rdata;
+            mbus_re <= 1'b0;
+
+            /* Write data to dest */
+            mbus_addr <= c_dest[47:0];
+            mbus_wdata <= c_inbuf & (1 << (c_size * 8)) - 1;
+            mbus_we <= 1'b1;
+
+            @(posedge clk);
+            mbus_we <= 1'b0;
+        end
+    endtask
 
     always @(posedge clk) begin
         /* Handle MMIO reads */
@@ -154,6 +204,26 @@ module dmactl #(
                 C3_MMIO_BASE + 16: c3_size <= mmio_wdata[15:0];
                 C3_MMIO_BASE + 18: c3_ctl <= mmio_wdata[7:0];
             endcase
+
+            if (c0_ctl[CCTL_START] == 1'b1) begin
+                channel_rw(c0_rdata, c0_src[47:0], c0_dest[47:0], c0_size, c0_ctl);
+                c0_ctl[CCTL_START] <= 1'b0;
+            end
+
+            if (c1_ctl[CCTL_START] == 1'b1) begin
+                channel_rw(c1_rdata, c1_src[47:0], c1_dest[47:0], c1_size, c1_ctl);
+                c1_ctl[CCTL_START] <= 1'b0;
+            end
+
+            if (c2_ctl[CCTL_START] == 1'b1) begin
+                channel_rw(c2_rdata, c2_src[47:0], c2_dest[47:0], c2_size, c2_ctl);
+                c2_ctl[CCTL_START] <= 1'b0;
+            end
+
+            if (c3_ctl[CCTL_START] == 1'b1) begin
+                channel_rw(c3_rdata, c3_src[47:0], c3_dest[47:0], c3_size, c3_ctl);
+                c3_ctl[CCTL_START] <= 1'b0;
+            end
         end
     end
 endmodule
