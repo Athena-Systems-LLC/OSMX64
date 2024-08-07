@@ -36,8 +36,8 @@ module dmactl #(
         /* MMIO bases for DMA channels */
         parameter C0_MMIO_BASE = 48'h1000140,
         parameter C1_MMIO_BASE = 48'h1000153,
-        parameter C2_MMIO_BASE = 48'h1000153,
-        parameter C3_MMIO_BASE = 48'h1000166,
+        parameter C2_MMIO_BASE = 48'h1000166,
+        parameter C3_MMIO_BASE = 48'h100016E,
 
         /* Channel control bits */
         parameter CCTL_START = 0,
